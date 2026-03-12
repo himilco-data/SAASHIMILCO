@@ -16,7 +16,7 @@ RUN npm install --include=dev
 # Copier tout le reste du code
 COPY . .
 
-# Construire l'application en mode très détaillé pour voir l'erreur
+# Construire l'application en mode très détaillé
 RUN npm run build -- --verbose
 
 # Supprimer les outils de compilation pour alléger l'image
