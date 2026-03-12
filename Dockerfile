@@ -1,7 +1,7 @@
 # Utiliser une image Node.js (Debian)
 FROM node:20
 
-# Installer les outils nécessaires pour compiler les modules natifs (comme better-sqlite3)
+# Installer les outils nécessaires pour compiler les modules natifs
 RUN apt-get update && apt-get install -y \
     python3 \
     make \
@@ -14,8 +14,8 @@ WORKDIR /app
 # Copier les fichiers de dépendances
 COPY package*.json ./
 
-# Installer toutes les dépendances
-RUN npm install --include=dev
+# Installer les dépendances et afficher le log complet en cas d'erreur
+RUN npm install --include=dev || (cat /root/.npm/_logs/*-debug.log && exit 1)
 
 # Copier tout le reste du code
 COPY . .
