@@ -1,7 +1,7 @@
 # Utiliser une image Node.js
 FROM node:20-alpine
 
-# Installer les outils nécessaires pour compiler les modules natifs (comme better-sqlite3)
+# Installer les outils nécessaires pour compiler les modules natifs
 RUN apk add --no-cache python3 make g++
 
 # Définir le répertoire de travail
@@ -10,14 +10,14 @@ WORKDIR /app
 # Copier les fichiers de dépendances
 COPY package*.json ./
 
-# Installer toutes les dépendances (incluant les devDependencies pour la compilation)
+# Installer toutes les dépendances
 RUN npm install --include=dev
 
 # Copier tout le reste du code
 COPY . .
 
-# Construire l'application
-RUN npm run build
+# Construire l'application et afficher le journal d'erreur si ça échoue
+RUN npm run build > build.log 2>&1 || (cat build.log && exit 1)
 
 # Supprimer les outils de compilation pour alléger l'image
 RUN apk del python3 make g++
