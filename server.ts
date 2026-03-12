@@ -10,7 +10,7 @@ import fs from "fs";
 
 const app = express();
 const PORT = 3000;
-const db = new Database("database.sqlite");
+const db = new sqlite3.Database("database.sqlite");
 
 // Ensure upload directory exists
 const uploadDir = "uploads";
