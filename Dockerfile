@@ -1,8 +1,5 @@
-# Utiliser une image Node.js
-FROM node:20-alpine
-
-# Installer les outils nécessaires pour compiler les modules natifs
-RUN apk add --no-cache python3 make g++
+# Utiliser une image Node.js plus complète (basée sur Debian)
+FROM node:20
 
 # Définir le répertoire de travail
 WORKDIR /app
@@ -16,11 +13,8 @@ RUN npm install --include=dev
 # Copier tout le reste du code
 COPY . .
 
-# Construire l'application en mode très détaillé
-RUN npm run build -- --verbose
-
-# Supprimer les outils de compilation pour alléger l'image
-RUN apk del python3 make g++
+# Construire l'application
+RUN npm run build
 
 # Exposer le port 3000
 EXPOSE 3000
