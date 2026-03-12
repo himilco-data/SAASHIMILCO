@@ -1,5 +1,12 @@
-# Utiliser une image Node.js plus complète (basée sur Debian)
+# Utiliser une image Node.js (Debian)
 FROM node:20
+
+# Installer les outils nécessaires pour compiler les modules natifs (comme better-sqlite3)
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
 
 # Définir le répertoire de travail
 WORKDIR /app
