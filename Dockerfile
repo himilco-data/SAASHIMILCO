@@ -16,8 +16,8 @@ RUN npm install --include=dev
 # Copier tout le reste du code
 COPY . .
 
-# Construire l'application et afficher le journal d'erreur si ça échoue
-RUN npm run build > build.log 2>&1 || (cat build.log && exit 1)
+# Construire l'application et afficher le journal d'erreur directement si ça échoue
+RUN npm run build || (echo "--- ERREUR DE BUILD ---" && npm run build)
 
 # Supprimer les outils de compilation pour alléger l'image
 RUN apk del python3 make g++
